@@ -37,7 +37,7 @@ public Employee findByEmailId(String emailId){
 			Role r = new Role();
 			r.setId(rs.getLong("ROLE_ID"));
 			r.setCode(rs.getString("ROLE_CODE"));
-			r.setName("ROLE_NAME");
+			r.setName(rs.getString("ROLE_NAME"));
 			
 			emp.setRole(r);		
 		
