@@ -14,6 +14,7 @@ public class ConnectionUtil {
 	        ds.setUrl("jdbc:mysql://localhost:3306/lms_db");
 	        ds.setUsername("root");
 	        ds.setPassword("");
+	     
 	        return ds;
 	    }
 
