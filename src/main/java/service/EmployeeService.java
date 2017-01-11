@@ -12,5 +12,9 @@ public class EmployeeService {
 
 		return employeeDAO.findByEmailId(emailId);
 	}
+	public Employee findById(Long empId) {
+
+		return employeeDAO.findById(empId);
+	}
 
 }

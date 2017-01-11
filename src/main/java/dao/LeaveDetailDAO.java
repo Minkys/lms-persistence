@@ -19,6 +19,7 @@ public class LeaveDetailDAO {
 
 		System.out.println("No of rows inserted:" + rows);
 	}
-
 	
 }
+	
+

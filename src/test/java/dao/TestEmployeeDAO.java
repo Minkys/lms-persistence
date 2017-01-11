@@ -11,9 +11,8 @@ public class TestEmployeeDAO {
 		Employee findByEmailId = empDao.findByEmailId("senthil@gmail.com");
 		System.out.println(findByEmailId);
 		
-		
-		
-		
+		Employee employee = empDao.findById(1L);
+		System.out.println(employee);	
 		
 		
 	}
