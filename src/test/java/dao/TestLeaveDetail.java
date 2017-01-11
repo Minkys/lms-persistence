@@ -1,6 +1,7 @@
 package dao;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import model.Employee;
 import model.LeaveDetail;
@@ -31,7 +32,9 @@ public class TestLeaveDetail {
 		
 		LeaveDetailDAO ldDao = new LeaveDetailDAO();
 		ldDao.applyLeave(ld);
-		
+		List<LeaveDetail> list = ldDao.list(1L);
+		for (LeaveDetail leaveDetail : list) {
+			System.out.println(leaveDetail);
+		}
 	}
-
 }
