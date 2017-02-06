@@ -112,7 +112,16 @@ public class LeaveDetailDAO {
 
 	}
 
-	
+
+	public void update(LeaveDetail ld) {
+
+		String sql = "UPDATE EMPLOYEE_LEAVE_DETAILS SET STATUS_ID = ? , MODIFIED_BY = ? , MODIFIED_DATE= NOW() WHERE ID = ?";
+
+		int rows = jdbcTemplate.update(sql, ld.getStatus().getId(), ld.getModifiedBy().getId(), ld.getId());
+
+		System.out.println("No of rows inserted:" + rows);
+
+	}
 
 	private class LeaveDetailRowMapper implements RowMapper<LeaveDetail> {
 

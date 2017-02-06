@@ -24,10 +24,5 @@ public class LeaveDetailService {
 		return ldDao.findById(leaveId);
 	}
 	
-	public void delete (LeaveDetail ld) {
-
-		 ldDao.delete(ld);
-	}
-
-
+	
 }
