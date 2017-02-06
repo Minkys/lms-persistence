@@ -70,6 +70,48 @@ public class LeaveDetailDAO {
 		return list;
 
 	}	
+	public LeaveDetail findById(Long id) {
+
+		String sql = "SELECT ld.ID, ld.EMP_ID, FROM_DATE,TO_DATE, NO_OF_DAYS, LEAVE_TYPE AS LEAVE_TYPE_ID, STATUS_ID, ld.APPLIED_DATE, ld.MODIFIED_BY, ld.MODIFIED_DATE FROM EMPLOYEE_LEAVE_DETAILS ld where ID = ? ";
+
+		// List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] { empId
+		// }, new LeaveDetailRowMapper());
+
+		LeaveDetail list = jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNo) -> {
+			
+			
+			long employeeId = rs.getLong("EMP_ID");			
+			Employee emp = new EmployeeDAO().findById(employeeId);
+			
+			
+			long modifiedByUser = rs.getLong("MODIFIED_BY");
+			Employee modifiedBy = new EmployeeDAO().findById(modifiedByUser);
+			
+			long statusId = rs.getLong("STATUS_ID");
+			LeaveStatus ls = new LeaveStatusDAO().findById(statusId);
+			
+			
+			long leaveTypeId = rs.getLong("LEAVE_TYPE_ID");			
+			LeaveType lt = new LeaveTypeDAO().findById(leaveTypeId);
+			
+
+			LeaveDetail ld = new LeaveDetail();
+			ld.setId(rs.getLong("ID"));
+			ld.setEmployee(emp);
+			ld.setFromDate(rs.getDate("FROM_DATE").toLocalDate());
+			ld.setToDate(rs.getDate("TO_DATE").toLocalDate());
+			ld.setNoOfDays(rs.getFloat("NO_OF_DAYS"));
+			ld.setLeaveType(lt);
+			ld.setStatus(ls);
+			ld.setAppliedDate(rs.getDate("APPLIED_DATE").toLocalDate());
+			ld.setModifiedBy(modifiedBy);
+			ld.setModifiedDate(rs.getDate("MODIFIED_DATE").toLocalDate());
+			return ld;
+		});
+		return list;
+
+	}
+
 	
 
 	private class LeaveDetailRowMapper implements RowMapper<LeaveDetail> {

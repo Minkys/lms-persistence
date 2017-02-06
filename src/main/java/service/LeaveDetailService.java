@@ -12,9 +12,22 @@ public class LeaveDetailService {
 	public void save(LeaveDetail ld) {
 		ldDao.applyLeave(ld);
 	}
-	public List<LeaveDetail> list(Long empId) {
+	public List<LeaveDetail> list(Long lId) {
 
-		return ldDao.list(empId);
+		return ldDao.list(lId);
 	}
+	public void update(LeaveDetail ld) {
+		ldDao.applyLeave(ld);
+	}
+	public LeaveDetail findById (Long leaveId) {
+
+		return ldDao.findById(leaveId);
+	}
+	
+	public void delete (LeaveDetail ld) {
+
+		 ldDao.delete(ld);
+	}
+
 
 }
