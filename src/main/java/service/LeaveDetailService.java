@@ -12,17 +12,24 @@ public class LeaveDetailService {
 	public void save(LeaveDetail ld) {
 		ldDao.applyLeave(ld);
 	}
-	public List<LeaveDetail> list(Long lId) {
+	public List<LeaveDetail> list(Long employeeId) {
 
-		return ldDao.list(lId);
+		return ldDao.list(employeeId);
+	}
+	public List<LeaveDetail> findAllPendingLeaves() {
+
+		return ldDao.findAllPendingLeaves();
 	}
 	public void update(LeaveDetail ld) {
-		ldDao.applyLeave(ld);
+		ldDao.update(ld);
 	}
 	public LeaveDetail findById (Long leaveId) {
 
 		return ldDao.findById(leaveId);
 	}
 	
+	public List<LeaveDetail> findMyTeamPendingLeaves(long empId) {
+		return ldDao.findMyTeamPendingLeaves(empId);
+	}
 	
 }

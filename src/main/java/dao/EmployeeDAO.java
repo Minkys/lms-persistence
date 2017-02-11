@@ -41,20 +41,20 @@ public class EmployeeDAO {
 		Role r = new Role();
 		r.setId(rs.getLong("ROLE_ID"));
 		r.setCode(rs.getString("ROLE_CODE"));
-		r.setName("ROLE_NAME");
+		r.setName(rs.getString("ROLE_NAME"));
 
 		emp.setRole(r);
 		return emp;
 	}
 
-	public Employee findByEmailId(String emailId) {
+	public Employee findByEmailId(String emailId, String password) {
 
-		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.EMAIL_ID = ?";
+		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.EMAIL_ID = ? AND PASSWORD=? ";
 
 		Employee employee = null;
 
 		try {
-			employee = jdbcTemplate.queryForObject(sql, new Object[] { emailId }, (rs, rowNum) -> {
+			employee = jdbcTemplate.queryForObject(sql, new Object[] { emailId,password }, (rs, rowNum) -> {
 
 				return convert(rs);
 
