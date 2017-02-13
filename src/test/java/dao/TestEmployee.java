@@ -2,7 +2,7 @@ package dao;
 
 import model.Employee;
 
-public class TestEmployeeDAO {
+public class TestEmployee {
 
 	public static void main(String[] args) {
 		

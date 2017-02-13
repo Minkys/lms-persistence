@@ -5,7 +5,7 @@ import java.util.List;
 import model.Holiday;
 import service.HolidayService;
 
-public class TestHolidayDAO {
+public class TestHoliday {
 
 	public static void main(String[] args) {
 		
