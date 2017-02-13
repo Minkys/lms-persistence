@@ -8,7 +8,7 @@ public class TestEmployeeDAO {
 		
 		EmployeeDAO empDao = new EmployeeDAO();		
 			
-		Employee findByEmailId = empDao.findByEmailId("senthil@gmail.com");
+		Employee findByEmailId = empDao.findByEmailId("senthil@gmail.com","sa");
 		System.out.println(findByEmailId);
 		
 		Employee employee = empDao.findById(1L);

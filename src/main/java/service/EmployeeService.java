@@ -8,9 +8,9 @@ public class EmployeeService {
 	private EmployeeDAO employeeDAO = new EmployeeDAO();
 
 
-	public Employee findByEmailId(String emailId) {
+	public Employee findByEmailId(String emailId,String password) {
 
-		return employeeDAO.findByEmailId(emailId);
+		return employeeDAO.findByEmailId(emailId,password);
 	}
 	public Employee findById(Long empId) {
 
