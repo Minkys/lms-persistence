@@ -43,13 +43,13 @@ public class LeaveRoleDAO {
 
 	}	
 	
-/*	public LeaveRole findById(Long id) {
+	public LeaveRole findById(Long id) {
 
 		String sql = "SELECT rl.ID,rl.ROLE_ID,CASUAL_LEAVE,SICK_LEAVE,PAID_LEAVE,"
-				+ "MATERNITY_LEAVE,PATERNITY_LEAVE,PRIVILEGED_LEAVE,rl.CREATED_DATE,rl.MODIFIED_DATE FROM ROLE_LEAVES rl,ROLE r WHERE rl.ROLE_ID=r.ID AND ID=?";
+				+ "MATERNITY_LEAVE,PATERNITY_LEAVE,PRIVILEGED_LEAVE,rl.CREATED_DATE,rl.MODIFIED_DATE FROM ROLE_LEAVES rl,ROLE r WHERE rl.ROLE_ID=r.ID AND r.ID=?";
 							
 
-		LeaveRole list = jdbcTemplate.query(sql, new Object[] { id }, (rs, rowNo) -> {
+		LeaveRole list = jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNo) -> {
 			
 			
 			long roleId = rs.getLong("ROLE_ID");			
@@ -72,7 +72,7 @@ public class LeaveRoleDAO {
 		return list;
 
 	}	
-	*/
+	
 }
 
 

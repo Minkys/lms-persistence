@@ -14,4 +14,9 @@ public class LeaveRoleService {
 		return ldDao.list();
 	}
 	
+	public LeaveRole findByRoleId(long id) {
+
+		return ldDao.findById(id);
+	}
+	
 }

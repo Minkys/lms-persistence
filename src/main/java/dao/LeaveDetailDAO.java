@@ -23,36 +23,28 @@ public class LeaveDetailDAO {
 				+ "VALUES ( ?, ?, ?, ?, ?, ?, NOW(),?, NOW() )";
 
 		int rows = jdbcTemplate.update(sql, ld.getEmployee().getId(), ld.getFromDate(), ld.getToDate(),
-				ld.getNoOfDays(), ld.getLeaveType().getId(), ld.getStatus().getId(),ld.getEmployee().getId());
+				ld.getNoOfDays(), ld.getLeaveType().getId(), ld.getStatus().getId(), ld.getEmployee().getId());
 
 		System.out.println("No of rows inserted:" + rows);
 	}
-	
-	
+
 	public List<LeaveDetail> list(Long empId) {
 
 		String sql = "SELECT e.NAME, ld.ID, ld.EMP_ID, FROM_DATE,TO_DATE, NO_OF_DAYS, LEAVE_TYPE AS LEAVE_TYPE_ID, STATUS_ID, ld.APPLIED_DATE, ld.MODIFIED_BY, ld.MODIFIED_DATE FROM EMPLOYEE_LEAVE_DETAILS ld , EMPLOYEES e WHERE ld.EMP_ID = e.ID AND EMP_ID= ?";
 
-		// List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] { empId
-		// }, new LeaveDetailRowMapper());
-
 		List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] { empId }, (rs, rowNo) -> {
-			
-			
-			long employeeId = rs.getLong("EMP_ID");			
+
+			long employeeId = rs.getLong("EMP_ID");
 			Employee emp = new EmployeeDAO().findById(employeeId);
-			
-			
+
 			long modifiedByUser = rs.getLong("MODIFIED_BY");
 			Employee modifiedBy = new EmployeeDAO().findById(modifiedByUser);
-			
+
 			long statusId = rs.getLong("STATUS_ID");
 			LeaveStatus ls = new LeaveStatusDAO().findById(statusId);
-			
-			
-			long leaveTypeId = rs.getLong("LEAVE_TYPE_ID");			
+
+			long leaveTypeId = rs.getLong("LEAVE_TYPE_ID");
 			LeaveType lt = new LeaveTypeDAO().findById(leaveTypeId);
-			
 
 			LeaveDetail ld = new LeaveDetail();
 			ld.setId(rs.getLong("ID"));
@@ -69,31 +61,25 @@ public class LeaveDetailDAO {
 		});
 		return list;
 
-	}	
+	}
+
 	public List<LeaveDetail> findAllPendingLeaves() {
 
 		String sql = "SELECT e.NAME, ld.ID, ld.EMP_ID, FROM_DATE,TO_DATE, NO_OF_DAYS, LEAVE_TYPE AS LEAVE_TYPE_ID, STATUS_ID, ld.APPLIED_DATE, ld.MODIFIED_BY, ld.MODIFIED_DATE FROM EMPLOYEE_LEAVE_DETAILS ld , EMPLOYEES e WHERE ld.EMP_ID = e.ID AND STATUS_ID= 1";
 
-		// List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] { empId
-		// }, new LeaveDetailRowMapper());
+		List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] {}, (rs, rowNo) -> {
 
-		List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] { }, (rs, rowNo) -> {
-			
-			
-			long employeeId = rs.getLong("EMP_ID");			
+			long employeeId = rs.getLong("EMP_ID");
 			Employee emp = new EmployeeDAO().findById(employeeId);
-			
-			
+
 			long modifiedByUser = rs.getLong("MODIFIED_BY");
 			Employee modifiedBy = new EmployeeDAO().findById(modifiedByUser);
-			
+
 			long statusId = rs.getLong("STATUS_ID");
 			LeaveStatus ls = new LeaveStatusDAO().findById(statusId);
-			
-			
-			long leaveTypeId = rs.getLong("LEAVE_TYPE_ID");			
+
+			long leaveTypeId = rs.getLong("LEAVE_TYPE_ID");
 			LeaveType lt = new LeaveTypeDAO().findById(leaveTypeId);
-			
 
 			LeaveDetail ld = new LeaveDetail();
 			ld.setId(rs.getLong("ID"));
@@ -110,32 +96,26 @@ public class LeaveDetailDAO {
 		});
 		return list;
 
-	}	
+	}
+
 	public List<LeaveDetail> findMyTeamPendingLeaves(long empId) {
 
 		String sql = "SELECT e.NAME, ld.ID, ld.EMP_ID, FROM_DATE,TO_DATE, NO_OF_DAYS, LEAVE_TYPE AS LEAVE_TYPE_ID, STATUS_ID, ld.APPLIED_DATE, ld.MODIFIED_BY, ld.MODIFIED_DATE FROM EMPLOYEE_LEAVE_DETAILS ld , EMPLOYEES e WHERE ld.EMP_ID = e.ID AND STATUS_ID= 1 AND "
 				+ "ld.EMP_ID in (SELECT emp_id FROM employee_hierarchy WHERE mgr_id=?)";
 
-		// List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] { empId
-		// }, new LeaveDetailRowMapper());
+		List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] { empId }, (rs, rowNo) -> {
 
-		List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] { empId}, (rs, rowNo) -> {
-			
-			
-			long employeeId = rs.getLong("EMP_ID");			
+			long employeeId = rs.getLong("EMP_ID");
 			Employee emp = new EmployeeDAO().findById(employeeId);
-			
-			
+
 			long modifiedByUser = rs.getLong("MODIFIED_BY");
 			Employee modifiedBy = new EmployeeDAO().findById(modifiedByUser);
-			
+
 			long statusId = rs.getLong("STATUS_ID");
 			LeaveStatus ls = new LeaveStatusDAO().findById(statusId);
-			
-			
-			long leaveTypeId = rs.getLong("LEAVE_TYPE_ID");			
+
+			long leaveTypeId = rs.getLong("LEAVE_TYPE_ID");
 			LeaveType lt = new LeaveTypeDAO().findById(leaveTypeId);
-			
 
 			LeaveDetail ld = new LeaveDetail();
 			ld.setId(rs.getLong("ID"));
@@ -152,7 +132,8 @@ public class LeaveDetailDAO {
 		});
 		return list;
 
-	}	
+	}
+
 	public LeaveDetail findById(Long id) {
 
 		String sql = "SELECT ld.ID, ld.EMP_ID, FROM_DATE,TO_DATE, NO_OF_DAYS, LEAVE_TYPE AS LEAVE_TYPE_ID, STATUS_ID, ld.APPLIED_DATE, ld.MODIFIED_BY, ld.MODIFIED_DATE FROM EMPLOYEE_LEAVE_DETAILS ld where ld.ID = ? ";
@@ -161,22 +142,18 @@ public class LeaveDetailDAO {
 		// }, new LeaveDetailRowMapper());
 
 		LeaveDetail list = jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNo) -> {
-			
-			
-			long employeeId = rs.getLong("EMP_ID");			
+
+			long employeeId = rs.getLong("EMP_ID");
 			Employee emp = new EmployeeDAO().findById(employeeId);
-			
-			
+
 			long modifiedByUser = rs.getLong("MODIFIED_BY");
 			Employee modifiedBy = new EmployeeDAO().findById(modifiedByUser);
-			
+
 			long statusId = rs.getLong("STATUS_ID");
 			LeaveStatus ls = new LeaveStatusDAO().findById(statusId);
-			
-			
-			long leaveTypeId = rs.getLong("LEAVE_TYPE_ID");			
+
+			long leaveTypeId = rs.getLong("LEAVE_TYPE_ID");
 			LeaveType lt = new LeaveTypeDAO().findById(leaveTypeId);
-			
 
 			LeaveDetail ld = new LeaveDetail();
 			ld.setId(rs.getLong("ID"));
@@ -194,7 +171,6 @@ public class LeaveDetailDAO {
 		return list;
 
 	}
-
 
 	public void update(LeaveDetail ld) {
 
@@ -206,14 +182,16 @@ public class LeaveDetailDAO {
 		System.out.println("No of rows updated:" + rows);
 
 	}
-	
-public void delete(Long leaveId) {
-		
-		String sql ="DELETE FROM EMPLOYEE_LEAVE_DETAILS WHERE ID= ? ";
+
+	public void delete(Long leaveId) {
+
+		String sql = "DELETE FROM EMPLOYEE_LEAVE_DETAILS WHERE ID= ? ";
 		int rows = jdbcTemplate.update(sql, leaveId);
 		System.out.println("No of rows deleted:" + rows);
-		
+
 	}
+
+	
 
 	private class LeaveDetailRowMapper implements RowMapper<LeaveDetail> {
 
@@ -246,5 +224,3 @@ public void delete(Long leaveId) {
 
 	}
 }
-	
-
