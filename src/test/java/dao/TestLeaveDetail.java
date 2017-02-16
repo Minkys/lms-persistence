@@ -45,16 +45,28 @@ public class TestLeaveDetail {
 		
 		System.out.println("Deleted");*/
 		
-		LeaveDetail lddao = new LeaveDetailDAO().findById(20L);
+		/*LeaveDetail lddao = new LeaveDetailDAO().findById(20L);
 		
 		LeaveType lt=new LeaveType();
 		lt.setId(2L);
 		
 		LeaveDetail ld = new LeaveDetail();	
-		ld.setLeaveType(lt);
-		
+		ld.setLeaveType(lt);		
 		
 		new LeaveDetailDAO().update(ld);
-		System.out.println("Updated");
+		System.out.println("Updated");*/
+		
+		LeaveDetail ld = new LeaveDetailDAO().findById(45L);
+		
+		LeaveType lt=new LeaveType();
+		lt.setId(4L);
+		
+        ld.setLeaveType(lt);
+		ld.setFromDate(LocalDate.parse("2017-02-18"));
+		ld.setToDate(LocalDate.parse("2017-02-19"));
+
+		ld.setNoOfDays(Float.valueOf(2f));
+		new LeaveDetailDAO().updateLeaveDetail(ld);
+		System.out.println("updated");
 	}
 }

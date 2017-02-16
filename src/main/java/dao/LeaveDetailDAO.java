@@ -138,9 +138,6 @@ public class LeaveDetailDAO {
 
 		String sql = "SELECT ld.ID, ld.EMP_ID, FROM_DATE,TO_DATE, NO_OF_DAYS, LEAVE_TYPE AS LEAVE_TYPE_ID, STATUS_ID, ld.APPLIED_DATE, ld.MODIFIED_BY, ld.MODIFIED_DATE FROM EMPLOYEE_LEAVE_DETAILS ld where ld.ID = ? ";
 
-		// List<LeaveDetail> list = jdbcTemplate.query(sql, new Object[] { empId
-		// }, new LeaveDetailRowMapper());
-
 		LeaveDetail list = jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNo) -> {
 
 			long employeeId = rs.getLong("EMP_ID");
@@ -182,6 +179,18 @@ public class LeaveDetailDAO {
 		System.out.println("No of rows updated:" + rows);
 
 	}
+	
+	public void updateLeaveDetail(LeaveDetail ld) {
+
+		String sql = "UPDATE EMPLOYEE_LEAVE_DETAILS SET FROM_DATE=?,TO_DATE=?,"
+				+ "NO_OF_DAYS = ? ,LEAVE_TYPE = ?  WHERE ID = ?";
+System.out.println(sql);
+System.out.println(ld.getFromDate() +"-" + ld.getToDate() +"-" + ld.getNoOfDays() +"-" + ld.getLeaveType().getId() +"-" + ld.getId());
+		int rows = jdbcTemplate.update(sql, ld.getFromDate(), ld.getToDate(),ld.getNoOfDays(), ld.getLeaveType().getId(),ld.getId());
+
+		System.out.println("No of rows updated:" + rows);
+		
+		}
 
 	public void delete(Long leaveId) {
 
@@ -190,7 +199,7 @@ public class LeaveDetailDAO {
 		System.out.println("No of rows deleted:" + rows);
 
 	}
-
+	
 	
 
 	private class LeaveDetailRowMapper implements RowMapper<LeaveDetail> {
