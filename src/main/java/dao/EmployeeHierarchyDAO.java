@@ -67,8 +67,9 @@ public class EmployeeHierarchyDAO {
 	
 	public EmployeeHierarchy findById(Long id) {
 
-		String sql = "SELECT EMP_ID, MGR_ID FROM EMPLOYEE_HIERARCHY  WHERE ID=?";
-
+		System.out.println(id);
+		String sql = "SELECT ID,EMP_ID, MGR_ID FROM EMPLOYEE_HIERARCHY  WHERE ID=?";
+		System.out.println(sql);
 		EmployeeHierarchy employee = jdbcTemplate.queryForObject(sql, new Object[] {id }, (rs, rowNum) -> {
 
 			return convert(rs);
