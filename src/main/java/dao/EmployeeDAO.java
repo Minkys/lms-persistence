@@ -65,6 +65,16 @@ public class EmployeeDAO {
 		return employee;
 
 	}
+	public void registerEmployee(Employee emp) {
+
+		String sql = "INSERT INTO EMPLOYEES ( CODE , NAME, EMAIL_ID, MOBILE_NO, ROLE_ID,PASSWORD,CREATED_DATE,MODIFIED_DATE )"
+				+ "VALUES ( ?, ?, ?, ?, ?,?,NOW(), NOW() )";
+
+		int rows = jdbcTemplate.update(sql,emp.getCode(),emp.getName(),emp.getEmailId(),emp.getMobileNo()
+				,emp.getRole().getId(),emp.getPassword());
+
+		System.out.println("No of rows Register:" + rows);
+	}
 	
 	
 
