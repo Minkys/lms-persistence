@@ -1,5 +1,6 @@
 package dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import model.Holiday;
@@ -10,11 +11,33 @@ public class TestHoliday {
 	public static void main(String[] args) {
 		
 
-		HolidayService HolidayService = new HolidayService();
-			
-		List<Holiday> list = HolidayService.list();
+		HolidayService holidayService = new HolidayService();
+		/*			
+		List<Holiday> list = holidayService.list();
 		for (Holiday holiday : list) {
 			System.out.println(holiday);
+	}*/	
+			
+		/*Holiday h=new Holiday();
+		h.setHolidayDate(LocalDate.now());
+		h.setStatus("RAMJAN");
+		
+		HolidayDAO dao=new HolidayDAO();
+		dao.addHoliday(h);
+		
+		System.out.println("Added");*/
+		
+	
+	/*Holiday holiday=holidayService.findById(13L);
+	holiday.setHolidayDate(LocalDate.now());
+	holiday.setStatus("Chrithumas");
+	holidayService.update(holiday);
+	System.out.println("Updated");
+	*/
+	
+	holidayService.delete(14L);
 	}
-}
+	
+	
+	
 }
