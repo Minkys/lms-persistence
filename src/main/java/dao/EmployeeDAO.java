@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -76,6 +77,15 @@ public class EmployeeDAO {
 		System.out.println("No of rows Register:" + rows);
 	}
 	
-	
+	public List<Employee> list() {
+
+		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID";
+
+		List<Employee> list = jdbcTemplate.query(sql, new Object[] {  }, (rs, rowNum) -> {
+			return convert(rs);
+		});
+		return list;
+
+	}
 
 }
