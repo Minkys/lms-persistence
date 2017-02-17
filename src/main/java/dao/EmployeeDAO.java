@@ -88,4 +88,12 @@ public class EmployeeDAO {
 
 	}
 
+	public void delete(Long empId) {
+
+		String sql = "DELETE FROM EMPLOYEES WHERE ID= ? ";
+		int rows = jdbcTemplate.update(sql, empId);
+		System.out.println("No of rows deleted:" + rows);
+
+	}
+
 }

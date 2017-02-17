@@ -22,5 +22,8 @@ public class EmployeeService {
 
 		return employeeDAO.list();
 	}
+	public void delete(Long empId) {
 
+		employeeDAO.delete(empId);
+	}
 }

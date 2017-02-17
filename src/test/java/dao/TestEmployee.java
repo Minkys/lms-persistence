@@ -16,10 +16,13 @@ public class TestEmployee {
 		Employee employee = empDao.findById(1L);
 		System.out.println(employee);	
 		*/
-		List<Employee> list=empDao.list();
+		/*List<Employee> list=empDao.list();
 		
 		for(Employee emp:list){
 			System.out.println(emp);
-		}
+		}*/
+		
+		empDao.delete(11L);
+		System.out.println("Deleted");
 	}
 }
