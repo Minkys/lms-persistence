@@ -3,14 +3,14 @@ package dao;
 import model.Employee;
 import model.Role;
 
-public class testRegister {
+public class TestRegister {
 	
 	public static void main(String[] args) {
 		Employee emp=new Employee();
 		emp.setCode("SP0001");
 		emp.setName("SenthilGanesh");
-		emp.setEmailId("spin@gmail.com");
-		emp.setPassword("pass");
+		emp.setEmailId("ragu@gmail.com");
+		emp.setPassword("pa");
 		emp.setMobileNo(9000L);
 		
 		Role r=new Role();

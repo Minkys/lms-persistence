@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import dao.EmployeeDAO;
+import dao.UserMailManager;
 import model.Employee;
 
 public class EmployeeService {
@@ -26,4 +27,10 @@ public class EmployeeService {
 
 		employeeDAO.delete(empId);
 	}
+	public void register(Employee emp) {
+
+		employeeDAO.registerEmployee(emp);
+	}
+	
+	
 }

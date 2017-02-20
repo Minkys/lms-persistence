@@ -1,9 +1,5 @@
 package dao;
 
-import java.util.List;
-
-import model.Employee;
-
 public class TestEmployee {
 
 	public static void main(String[] args) {
@@ -22,7 +18,10 @@ public class TestEmployee {
 			System.out.println(emp);
 		}*/
 		
-		empDao.delete(11L);
-		System.out.println("Deleted");
+		/*empDao.delete(11L);
+		System.out.println("Deleted");*/
+		
+		
+
 	}
 }
