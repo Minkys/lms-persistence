@@ -26,11 +26,13 @@ public class TestEmployee {
 		 * empDao.delete(11L); System.out.println("Deleted");
 		 */
 
-		empDao.changePassword("spin@gmail.com", "passwor", "password");
+		/*empDao.changePassword("spin@gmail.com", "passwor", "password");
 		System.out.println("ChangedPassword");
 
 		Employee employee = empDao.findByEmailId("senthil@gmail.com");
-		System.out.println(employee.getPassword());
+		System.out.println(employee.getPassword());*/
+
+		empDao.addPasswordEntry(1L, "pass123", "pass12");
 
 	}
 }

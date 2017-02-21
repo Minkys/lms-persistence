@@ -55,7 +55,7 @@ public class EmployeeDAO {
 		Employee employee = null;
 
 		try {
-			employee = jdbcTemplate.queryForObject(sql, new Object[] { emailId,password }, (rs, rowNum) -> {
+			employee = jdbcTemplate.queryForObject(sql, new Object[] { emailId, password }, (rs, rowNum) -> {
 
 				return convert(rs);
 
@@ -66,63 +66,75 @@ public class EmployeeDAO {
 		return employee;
 
 	}
+
 	public void registerEmployee(Employee emp) {
 
 		String sql = "INSERT INTO EMPLOYEES ( CODE , NAME, EMAIL_ID, MOBILE_NO, ROLE_ID,PASSWORD,CREATED_DATE,MODIFIED_DATE )"
 				+ "VALUES ( ?, ?, ?, ?, ?,?,NOW(), NOW() )";
 
-		int rows = jdbcTemplate.update(sql,emp.getCode(),emp.getName(),emp.getEmailId(),emp.getMobileNo()
-				,emp.getRole().getId(),emp.getPassword());
+		int rows = jdbcTemplate.update(sql, emp.getCode(), emp.getName(), emp.getEmailId(), emp.getMobileNo(),
+				emp.getRole().getId(), emp.getPassword());
 
 		System.out.println("No of rows Register:" + rows);
 	}
-	
+
 	public List<Employee> list() {
 
 		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID";
 
-		List<Employee> list = jdbcTemplate.query(sql, new Object[] {  }, (rs, rowNum) -> {
+		List<Employee> list = jdbcTemplate.query(sql, new Object[] {}, (rs, rowNum) -> {
 			return convert(rs);
 		});
 		return list;
 
 	}
-	public boolean changePassword(String emailId, String oldPassword, String newPassword){
-		
-		boolean isModified=false;
-			String sql= "UPDATE EMPLOYEES SET PASSWORD=?, MODIFIED_DATE= NOW() WHERE EMAIL_ID=? AND PASSWORD= ?";
-			Integer rows=jdbcTemplate.update(sql,newPassword,emailId,oldPassword);
-			
-			if (rows >= 1) {
-				isModified = true;
-			}
 
-			System.out.println("No of rows Changed:" + rows);
-			return isModified;
+	public boolean changePassword(String emailId, String oldPassword, String newPassword) {
+
+		boolean isModified = false;
+		String sql = "UPDATE EMPLOYEES SET PASSWORD=?, MODIFIED_DATE= NOW() WHERE EMAIL_ID=? AND PASSWORD= ?";
+		Integer rows = jdbcTemplate.update(sql, newPassword, emailId, oldPassword);
+
+		if (rows >= 1) {
+			isModified = true;
 		}
-		
-		public Employee findByEmailId(String emailId) {
 
-			String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID,"
-					+ " MOBILE_NO,e.PASSWORD, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, "
-					+ "ROLE r WHERE e.ROLE_ID = r.ID AND e.EMAIL_ID = ? ";
+		System.out.println("No of rows Changed:" + rows);
+		return isModified;
+	}
 
-			Employee employee = null;
+	public void addPasswordEntry(Long empId, String oldPassword, String newPassword) {
 
-			try {
-				employee = jdbcTemplate.queryForObject(sql, new Object[] { emailId }, (rs, rowNum) -> {
+		String sql = "INSERT INTO PASSWORD_HISTORY ( EMP_ID, OLD_PASSWORD,NEW_PASSWORD,CREATED_DATE)"
+				+ "VALUES(?, ?, ?,NOW())";
+		Integer rows = jdbcTemplate.update(sql, empId, oldPassword, newPassword);
 
-					Employee convert = convert(rs);
-					convert.setPassword(rs.getString("PASSWORD"));
-					return convert;
+		System.out.println("No of rows Changed:" + rows);
 
-				});
-			} catch (EmptyResultDataAccessException e) {
-				e.printStackTrace();
-			}
-			return employee;
+	}
 
+	public Employee findByEmailId(String emailId) {
+
+		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID,"
+				+ " MOBILE_NO,e.PASSWORD, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, "
+				+ "ROLE r WHERE e.ROLE_ID = r.ID AND e.EMAIL_ID = ? ";
+
+		Employee employee = null;
+
+		try {
+			employee = jdbcTemplate.queryForObject(sql, new Object[] { emailId }, (rs, rowNum) -> {
+
+				Employee convert = convert(rs);
+				convert.setPassword(rs.getString("PASSWORD"));
+				return convert;
+
+			});
+		} catch (EmptyResultDataAccessException e) {
+			e.printStackTrace();
 		}
+		return employee;
+
+	}
 
 	public void delete(Long empId) {
 

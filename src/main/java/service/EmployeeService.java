@@ -61,7 +61,8 @@ public class EmployeeService {
 
 		boolean isModified = employeeDAO.changePassword(emailId, oldPassword, newPassword);
 		if (isModified) {
-			// employeeDAO.addPasswordEntry(emp1.getId(),oldPassword,newPassword);
+
+			employeeDAO.addPasswordEntry(emp1.getId(), oldPassword, newPassword);
 		} else {
 			throw new Exception("Unable to change Password.");
 
