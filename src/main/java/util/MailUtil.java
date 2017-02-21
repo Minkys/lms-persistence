@@ -1,35 +1,35 @@
 package util;
 
-
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.SimpleEmail;
 
- public class MailUtil {
+public class MailUtil {
 
 	@SuppressWarnings("deprecation")
 	public static void sendMail(String emailId, String subject, String content) throws Exception {
 
-		Email email = new SimpleEmail();
+		Email emailObj = new SimpleEmail();
 
-		email.setSmtpPort(587);
+		emailObj.setSmtpPort(587);
 
-		email.setAuthenticator(new DefaultAuthenticator("ral@gmail.com", "abcgddd"));
+		emailObj.setAuthenticator(new DefaultAuthenticator("senthil@gmail.com", "password"));
 
-		email.setDebug(false);
+		emailObj.setDebug(false);
 
-		email.setHostName("smtp.gmail.com");
-		email.setFrom("ral@gmail.com");
+		emailObj.setHostName("smtp.gmail.com");
+		emailObj.setFrom("senthil@gmail.com");
 
-		email.setSubject(subject); // change here
+		emailObj.setSubject(subject); // change here
 
-		email.setMsg(content);
+		emailObj.setMsg(content);
 
-		email.addTo(emailId); // correct
+		// emailObj.addTo(emailId); // correct
+		emailObj.addTo("senthil@gmail.com");
 
-		email.setTLS(true);
-		email.send();
+		emailObj.setTLS(true);
+		emailObj.send();
+		System.out.println("Mail Sent");
 	}
-	
-	
+
 }

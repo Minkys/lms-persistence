@@ -28,6 +28,34 @@ public class UserMailManager {
 
 	}	
 	
+	public static void sendPassword(Employee emp) throws Exception {
+
+		String subject = "Reg:Your Forgot Password";
+
+		StringBuilder message = new StringBuilder();
+
+		message.append("Dear " + emp.getName() + "...\n");
+		message.append("Your password here " + emp.getPassword() + "\n"); 
+																
+		message.append("Regards \n");
+		message.append("LMS Support Team");
+
+		MailUtil.sendMail(emp.getEmailId(), subject, message.toString());
+
+	}
 	
+	public static void changePassword(Employee emp, String newPassword) throws Exception {
+
+		String subject = "Reg:Your New Password";
+		StringBuilder message = new StringBuilder();
+
+		message.append("Dear " + emp.getName() + "...\n");
+		message.append("Your new password here (" + newPassword + ")\n"); // send password																			// password
+		message.append("Regards \n");
+		message.append("LMS Support Team");
+
+		MailUtil.sendMail(emp.getEmailId(), subject, message.toString());
+		
+	}
 
 }

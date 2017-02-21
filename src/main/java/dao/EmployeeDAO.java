@@ -48,7 +48,7 @@ public class EmployeeDAO {
 		return emp;
 	}
 
-	public Employee findByEmailId(String emailId, String password) {
+	public Employee findByEmailIdAndPassword(String emailId, String password) {
 
 		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.EMAIL_ID = ? AND PASSWORD=? ";
 
@@ -87,6 +87,42 @@ public class EmployeeDAO {
 		return list;
 
 	}
+	public boolean changePassword(String emailId, String oldPassword, String newPassword){
+		
+		boolean isModified=false;
+			String sql= "UPDATE EMPLOYEES SET PASSWORD=?, MODIFIED_DATE= NOW() WHERE EMAIL_ID=? AND PASSWORD= ?";
+			Integer rows=jdbcTemplate.update(sql,newPassword,emailId,oldPassword);
+			
+			if (rows >= 1) {
+				isModified = true;
+			}
+
+			System.out.println("No of rows Changed:" + rows);
+			return isModified;
+		}
+		
+		public Employee findByEmailId(String emailId) {
+
+			String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID,"
+					+ " MOBILE_NO,e.PASSWORD, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, "
+					+ "ROLE r WHERE e.ROLE_ID = r.ID AND e.EMAIL_ID = ? ";
+
+			Employee employee = null;
+
+			try {
+				employee = jdbcTemplate.queryForObject(sql, new Object[] { emailId }, (rs, rowNum) -> {
+
+					Employee convert = convert(rs);
+					convert.setPassword(rs.getString("PASSWORD"));
+					return convert;
+
+				});
+			} catch (EmptyResultDataAccessException e) {
+				e.printStackTrace();
+			}
+			return employee;
+
+		}
 
 	public void delete(Long empId) {
 
