@@ -17,7 +17,20 @@ public class EmployeeHierarchyDAO {
 
 		String sql = "SELECT e.ID,e.EMP_ID, e.MGR_ID FROM EMPLOYEE_HIERARCHY e";
 
-		List<EmployeeHierarchy> employee = jdbcTemplate.query(sql, new Object[] { }, (rs, rowNum) -> {
+		List<EmployeeHierarchy> employee = jdbcTemplate.query(sql, new Object[] {}, (rs, rowNum) -> {
+
+			return convert(rs);
+
+		});
+		return employee;
+
+	}
+
+	public List<EmployeeHierarchy> listMyTeam(Long mgrId) {
+
+		String sql = "SELECT e.ID,e.EMP_ID, e.MGR_ID FROM EMPLOYEE_HIERARCHY e where e.MGR_ID = ?";
+
+		List<EmployeeHierarchy> employee = jdbcTemplate.query(sql, new Object[] { mgrId }, (rs, rowNum) -> {
 
 			return convert(rs);
 
@@ -31,17 +44,15 @@ public class EmployeeHierarchyDAO {
 		emp.setId(rs.getInt("ID"));
 		emp.setEmpId(rs.getInt("EMP_ID"));
 		emp.setMgrId(rs.getInt("MGR_ID"));
-		
+
 		return emp;
 	}
 
-	
 	public void insertEmployeeHierarchy(EmployeeHierarchy emp) {
 
-		String sql = "INSERT INTO EMPLOYEE_HIERARCHY ( EMP_ID , MGR_ID)"
-				+ "VALUES ( ?, ?)";
+		String sql = "INSERT INTO EMPLOYEE_HIERARCHY ( EMP_ID , MGR_ID)" + "VALUES ( ?, ?)";
 
-		int rows = jdbcTemplate.update(sql,emp.getEmpId(),emp.getMgrId());
+		int rows = jdbcTemplate.update(sql, emp.getEmpId(), emp.getMgrId());
 
 		System.out.println("No of rows Inserted:" + rows);
 	}
@@ -49,13 +60,12 @@ public class EmployeeHierarchyDAO {
 	public void updateEmployeeHierarchy(EmployeeHierarchy emp) {
 
 		String sql = "UPDATE EMPLOYEE_HIERARCHY SET EMP_ID=?,MGR_ID=? WHERE ID = ?";
-				
 
-		int rows = jdbcTemplate.update(sql, emp.getEmpId(),emp.getMgrId(),emp.getId());
+		int rows = jdbcTemplate.update(sql, emp.getEmpId(), emp.getMgrId(), emp.getId());
 
 		System.out.println("No of rows updated:" + rows);
-		
-		}
+
+	}
 
 	public void delete(Long empId) {
 
@@ -64,13 +74,13 @@ public class EmployeeHierarchyDAO {
 		System.out.println("No of rows deleted:" + rows);
 
 	}
-	
+
 	public EmployeeHierarchy findById(Long id) {
 
 		System.out.println(id);
 		String sql = "SELECT ID,EMP_ID, MGR_ID FROM EMPLOYEE_HIERARCHY  WHERE ID=?";
 		System.out.println(sql);
-		EmployeeHierarchy employee = jdbcTemplate.queryForObject(sql, new Object[] {id }, (rs, rowNum) -> {
+		EmployeeHierarchy employee = jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
 
 			return convert(rs);
 
