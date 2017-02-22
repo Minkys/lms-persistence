@@ -26,11 +26,11 @@ public class EmployeeHierarchyDAO {
 
 	}
 
-	public List<EmployeeHierarchy> listMyTeam(Long mgrId) {
+	public List<EmployeeHierarchy> listMyTeam(Long empId) {
 
 		String sql = "SELECT e.ID,e.EMP_ID, e.MGR_ID FROM EMPLOYEE_HIERARCHY e where e.MGR_ID = ?";
 
-		List<EmployeeHierarchy> employee = jdbcTemplate.query(sql, new Object[] { mgrId }, (rs, rowNum) -> {
+		List<EmployeeHierarchy> employee = jdbcTemplate.query(sql, new Object[] { empId }, (rs, rowNum) -> {
 
 			return convert(rs);
 
