@@ -20,6 +20,11 @@ public class EmployeeService {
 		return employeeDAO.findById(empId);
 	}
 
+	public List<Employee> findMyProfile(Long id) {
+
+		return employeeDAO.findMyProfile(id);
+	}
+
 	public List<Employee> list() {
 
 		return employeeDAO.list();

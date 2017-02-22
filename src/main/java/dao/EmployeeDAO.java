@@ -67,6 +67,19 @@ public class EmployeeDAO {
 
 	}
 
+	public List<Employee> findMyProfile(Long id) {
+
+		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.ID = ?";
+
+		List<Employee> employee1 = jdbcTemplate.query(sql, new Object[] { id }, (rs, rowNum) -> {
+
+			return convert(rs);
+
+		});
+		return employee1;
+
+	}
+
 	public void registerEmployee(Employee emp) {
 
 		String sql = "INSERT INTO EMPLOYEES ( CODE , NAME, EMAIL_ID, MOBILE_NO, ROLE_ID,PASSWORD,CREATED_DATE,MODIFIED_DATE )"
