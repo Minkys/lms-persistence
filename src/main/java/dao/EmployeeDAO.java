@@ -102,6 +102,17 @@ public class EmployeeDAO {
 
 	}
 
+	public void update(Employee emp1) {
+
+		String sql = "UPDATE EMPLOYEES SET CODE=?,NAME=?,ROLE_ID=?,EMAIL_ID=?,MOBILE_NO=? WHERE ID=? ";
+
+		Integer rows = jdbcTemplate.update(sql, emp1.getCode(), emp1.getName(), emp1.getRole().getId(),
+				emp1.getEmailId(), emp1.getMobileNo(), emp1.getId());
+
+		System.out.println("No of rows Changed:" + rows);
+
+	}
+
 	public boolean changePassword(String emailId, String oldPassword, String newPassword) {
 
 		boolean isModified = false;

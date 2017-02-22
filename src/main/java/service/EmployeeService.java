@@ -35,6 +35,11 @@ public class EmployeeService {
 		employeeDAO.delete(empId);
 	}
 
+	public void update(Employee emp) {
+
+		employeeDAO.update(emp);
+	}
+
 	public void register(Employee emp) {
 
 		employeeDAO.registerEmployee(emp);

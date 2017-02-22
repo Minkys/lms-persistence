@@ -1,8 +1,7 @@
 package dao;
 
-import java.util.List;
-
 import model.Employee;
+import model.Role;
 
 public class TestEmployee {
 
@@ -15,8 +14,10 @@ public class TestEmployee {
 		 * System.out.println(findByEmailId);
 		 */
 
-		List<Employee> employee = empDao.findMyProfile(1L);
-		System.out.println(employee);
+		/*
+		 * List<Employee> employee = empDao.findMyProfile(1L);
+		 * System.out.println(employee);
+		 */
 
 		/*
 		 * List<Employee> list = empDao.list();
@@ -33,6 +34,17 @@ public class TestEmployee {
 		 * 
 		 * empDao.addPasswordEntry(1L, "pass123", "pass12");
 		 */
+		Employee emp = empDao.findById(8L);
+		emp.setCode("SP125");
+		emp.setName("Raguva");
+		emp.setMobileNo(98868749L);
+
+		Role r = new Role();
+		r.setId(10l);
+
+		emp.setRole(r);
+		empDao.update(emp);
+		System.out.println("Updated");
 
 	}
 }
