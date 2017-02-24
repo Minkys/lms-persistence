@@ -82,11 +82,11 @@ public class EmployeeDAO {
 
 	public void registerEmployee(Employee emp) {
 
-		String sql = "INSERT INTO EMPLOYEES ( CODE , NAME, EMAIL_ID, MOBILE_NO, ROLE_ID,PASSWORD,CREATED_DATE,MODIFIED_DATE )"
-				+ "VALUES ( ?, ?, ?, ?, ?,?,NOW(), NOW() )";
+		String sql = "INSERT INTO EMPLOYEES ( CODE , NAME, EMAIL_ID, MOBILE_NO, ROLE_ID,PASSWORD,GENDER,CREATED_DATE,MODIFIED_DATE )"
+				+ "VALUES ( ?, ?, ?, ?, ?,?,?,NOW(), NOW() )";
 
 		int rows = jdbcTemplate.update(sql, emp.getCode(), emp.getName(), emp.getEmailId(), emp.getMobileNo(),
-				emp.getRole().getId(), emp.getPassword());
+				emp.getRole().getId(), emp.getPassword(), emp.getGender());
 
 		System.out.println("No of rows Register:" + rows);
 	}
@@ -165,6 +165,17 @@ public class EmployeeDAO {
 		String sql = "DELETE FROM EMPLOYEES WHERE ID= ? ";
 		int rows = jdbcTemplate.update(sql, empId);
 		System.out.println("No of rows deleted:" + rows);
+
+	}
+
+	public void updateJobDetails(Employee emp1) {
+
+		String sql = "UPDATE EMPLOYEES SET CODE=?,NAME=?,ROLE_ID=?,EMAIL_ID=?,MOBILE_NO=? WHERE ID=? ";
+
+		Integer rows = jdbcTemplate.update(sql, emp1.getCode(), emp1.getName(), emp1.getRole().getId(),
+				emp1.getEmailId(), emp1.getMobileNo(), emp1.getId());
+
+		System.out.println("No of rows Changed:" + rows);
 
 	}
 }

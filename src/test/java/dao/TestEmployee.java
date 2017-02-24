@@ -34,17 +34,31 @@ public class TestEmployee {
 		 * 
 		 * empDao.addPasswordEntry(1L, "pass123", "pass12");
 		 */
-		Employee emp = empDao.findById(8L);
-		emp.setCode("SP125");
-		emp.setName("Raguva");
-		emp.setMobileNo(98868749L);
+		/*
+		 * Employee emp = empDao.findById(8L); emp.setCode("SP125");
+		 * emp.setName("Raguva"); emp.setMobileNo(98868749L);
+		 * 
+		 * Role r = new Role(); r.setId(10l);
+		 * 
+		 * emp.setRole(r); empDao.update(emp); System.out.println("Updated");
+		 */
+
+		Employee emp = new Employee();
+
+		emp.setCode("SP1253");
+		emp.setName("Ramya");
+		emp.setGender("FeMale");
+		emp.setMobileNo(988687494L);
+		emp.setEmailId("Ramya@gmail.com");
+		emp.setPassword("pass123");
 
 		Role r = new Role();
 		r.setId(10l);
 
 		emp.setRole(r);
-		empDao.update(emp);
-		System.out.println("Updated");
+		empDao.registerEmployee(emp);
+
+		System.out.println("Inserted");
 
 	}
 }
