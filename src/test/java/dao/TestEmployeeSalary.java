@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import model.Employee;
 import model.EmployeeSalaryDetails;
 
 public class TestEmployeeSalary {
@@ -10,7 +11,7 @@ public class TestEmployeeSalary {
 
 		EmployeeSalaryDAO salaryDao = new EmployeeSalaryDAO();
 
-		List<EmployeeSalaryDetails> mySalaryDetails = salaryDao.listMySalary(1L);
+		EmployeeSalaryDetails mySalaryDetails = salaryDao.listMySalary(1L);
 		System.out.println(mySalaryDetails);
 
 		List<EmployeeSalaryDetails> list = salaryDao.list();
@@ -21,12 +22,17 @@ public class TestEmployeeSalary {
 
 		EmployeeSalaryDetails emp = new EmployeeSalaryDetails();
 
-		emp.setEmpId(3L);
+		Employee empolyee = new Employee();
+		empolyee.setId(1l);
+
+		emp.setEmpId(empolyee);
 		emp.setBasicPay(200000L);
 		emp.setHra(100000L);
 		emp.setConveyance(1600L);
 		emp.setSpecialAllowance(23600L);
 		emp.setMedicalInsurance(1600L);
+		emp.setProvidentFund(2000L);
+		emp.setIncomeTax(12000L);
 
 		// salaryDao.insert(emp);
 		System.out.println("Insert");

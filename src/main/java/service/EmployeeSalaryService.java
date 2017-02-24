@@ -14,7 +14,7 @@ public class EmployeeSalaryService {
 		return employeeSalaryDAO.list();
 	}
 
-	public List<EmployeeSalaryDetails> listMySalary(Long empId) {
+	public EmployeeSalaryDetails listMySalary(Long empId) {
 
 		return employeeSalaryDAO.listMySalary(empId);
 	}
