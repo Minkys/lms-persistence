@@ -17,7 +17,7 @@ public class EmployeeDAO {
 
 	public Employee findById(Long id) {
 
-		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.ID = ?";
+		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID,e.GENDER, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.ID = ?";
 
 		Employee employee = jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
 
@@ -35,6 +35,7 @@ public class EmployeeDAO {
 		emp.setName(rs.getString("NAME"));
 		emp.setEmailId(rs.getString("EMAIL_ID"));
 		emp.setMobileNo(rs.getLong("MOBILE_NO"));
+		emp.setGender(rs.getString("GENDER"));
 		emp.setActive(rs.getBoolean("ACTIVE"));
 		emp.setCreatedDate(rs.getDate("CREATED_DATE").toLocalDate());
 		emp.setModifiedDate(rs.getDate("MODIFIED_DATE").toLocalDate());
@@ -50,7 +51,7 @@ public class EmployeeDAO {
 
 	public Employee findByEmailIdAndPassword(String emailId, String password) {
 
-		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.EMAIL_ID = ? AND PASSWORD=? ";
+		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO,GENDER, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.EMAIL_ID = ? AND PASSWORD=? ";
 
 		Employee employee = null;
 
@@ -69,7 +70,7 @@ public class EmployeeDAO {
 
 	public List<Employee> findMyProfile(Long id) {
 
-		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.ID = ?";
+		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO,GENDER, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID AND e.ID = ?";
 
 		List<Employee> employee1 = jdbcTemplate.query(sql, new Object[] { id }, (rs, rowNum) -> {
 
@@ -93,7 +94,7 @@ public class EmployeeDAO {
 
 	public List<Employee> list() {
 
-		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID";
+		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID, MOBILE_NO,GENDER, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, ROLE r WHERE e.ROLE_ID = r.ID";
 
 		List<Employee> list = jdbcTemplate.query(sql, new Object[] {}, (rs, rowNum) -> {
 			return convert(rs);
@@ -140,7 +141,7 @@ public class EmployeeDAO {
 	public Employee findByEmailId(String emailId) {
 
 		String sql = "SELECT e.ID, e.CODE, NAME, ROLE_ID , ROLE_CODE, ROLE_NAME, EMAIL_ID,"
-				+ " MOBILE_NO,e.PASSWORD, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, "
+				+ " MOBILE_NO,e.PASSWORD,e.GENDER, e.ACTIVE, e.CREATED_DATE, e.MODIFIED_DATE FROM EMPLOYEES e, "
 				+ "ROLE r WHERE e.ROLE_ID = r.ID AND e.EMAIL_ID = ? ";
 
 		Employee employee = null;
