@@ -14,10 +14,14 @@ public class EmployeeSalaryDAO {
 
 	private JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 
+	private String empNameQuery = "(SELECT NAME FROM EMPLOYEES emp where emp.ID = e.EMP_ID) EMP_NAME ";
+
 	public List<EmployeeSalaryDetails> list() {
 
-		String sql = "SELECT e.ID,e.EMP_ID, e.BASIC_PAY,e.HRA,e.CONVEYANCE, e.SPECIAL_ALLOWANCE,e.MEDICAL_INSURANCE,e.PROVIDENT_FUND,e.INCOME_TAX FROM EMPLOYEE_SALARY_DETAILS e";
+		String sql = "SELECT e.ID,e.EMP_ID, " + empNameQuery
+				+ " , e.BASIC_PAY,e.HRA,e.CONVEYANCE, e.SPECIAL_ALLOWANCE,e.MEDICAL_INSURANCE,e.PROVIDENT_FUND,e.INCOME_TAX FROM EMPLOYEE_SALARY_DETAILS e";
 
+		System.out.println(sql);
 		List<EmployeeSalaryDetails> employee = jdbcTemplate.query(sql, new Object[] {}, (rs, rowNum) -> {
 
 			return convert(rs);
@@ -29,9 +33,10 @@ public class EmployeeSalaryDAO {
 
 	public EmployeeSalaryDetails listMySalary(Long empId) {
 
-		String sql = "SELECT e.ID,e.EMP_ID, e.BASIC_PAY,e.HRA,e.CONVEYANCE, e.SPECIAL_ALLOWANCE,e.MEDICAL_INSURANCE,e.PROVIDENT_FUND,e.INCOME_TAX"
+		String sql = "SELECT e.ID,e.EMP_ID," + empNameQuery
+				+ ",e.BASIC_PAY,e.HRA,e.CONVEYANCE, e.SPECIAL_ALLOWANCE,e.MEDICAL_INSURANCE,e.PROVIDENT_FUND,e.INCOME_TAX"
 				+ " FROM EMPLOYEE_SALARY_DETAILS e WHERE e.EMP_ID=?";
-
+		System.out.println(sql);
 		EmployeeSalaryDetails employee = jdbcTemplate.queryForObject(sql, new Object[] { empId }, (rs, rowNum) -> {
 
 			return convert(rs);
@@ -47,7 +52,8 @@ public class EmployeeSalaryDAO {
 
 		Employee employee = new Employee();
 		employee.setId(rs.getLong("EMP_ID"));
-		emp.setEmpId(employee);
+		employee.setName(rs.getString("EMP_NAME"));
+		emp.setEmployee(employee);
 		emp.setBasicPay(rs.getLong("BASIC_PAY"));
 		emp.setHra(rs.getLong("HRA"));
 		emp.setConveyance(rs.getLong("CONVEYANCE"));
@@ -64,7 +70,7 @@ public class EmployeeSalaryDAO {
 		String sql = "INSERT INTO EMPLOYEE_SALARY_DETAILS ( EMP_ID , BASIC_PAY,HRA,CONVEYANCE,SPECIAL_ALLOWANCE,MEDICAL_INSURANCE,PROVIDENT_FUND,INCOME_TAX)"
 				+ "VALUES ( ?, ?,?, ?,?, ?,?,?)";
 
-		int rows = jdbcTemplate.update(sql, emp.getEmpId().getId(), emp.getBasicPay(), emp.getHra(),
+		int rows = jdbcTemplate.update(sql, emp.getEmployee().getId(), emp.getBasicPay(), emp.getHra(),
 				emp.getConveyance(), emp.getSpecialAllowance(), emp.getMedicalInsurance(), emp.getProvidentFund(),
 				emp.getIncomeTax());
 
